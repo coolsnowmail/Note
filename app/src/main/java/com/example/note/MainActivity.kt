@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         saveButton.setOnClickListener {
 
             tvText.text = ""
-            myDBManager.openDB()
+
             myDBManager.insertToDB(edTitle.text.toString(), edContent.text.toString())
             val dataList = myDBManager.readDBData()
             for (item in dataList) {
@@ -45,6 +45,16 @@ class MainActivity : AppCompatActivity() {
                 tvText.append("\n")
             }
             Toast.makeText(this, "The note is saved", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        myDBManager.openDB()
+        val dataList = myDBManager.readDBData()
+        for (item in dataList) {
+            tvText.append(item)
+            tvText.append("\n")
         }
     }
 
