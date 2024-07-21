@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.note.db.MyDBManager
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,7 +17,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var edTitle: EditText
     lateinit var edContent: EditText
     lateinit var tvText: TextView
+    val myDBManager = MyDBManager(this)
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
@@ -31,7 +35,22 @@ class MainActivity : AppCompatActivity() {
         tvText = findViewById(R.id.tvText)
 
         saveButton.setOnClickListener {
-            Toast.makeText(this, "sfsdfdsfdsf", Toast.LENGTH_LONG).show()
+
+            tvText.text = ""
+            myDBManager.openDB()
+            myDBManager.insertToDB(edTitle.text.toString(), edContent.text.toString())
+            val dataList = myDBManager.readDBData()
+            for (item in dataList) {
+                tvText.append(item)
+                tvText.append("\n")
+            }
+            Toast.makeText(this, "The note is saved", Toast.LENGTH_LONG).show()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        myDBManager.closeDB()
+
     }
 }

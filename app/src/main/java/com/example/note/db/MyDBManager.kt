@@ -29,6 +29,11 @@ class MyDBManager(context: Context) {
                 dataList.add(dataText.toString())
             }
         }
+        cursor?.close()
         return dataList
+    }
+
+    fun closeDB() {
+        myDBHelper.close()
     }
 }
