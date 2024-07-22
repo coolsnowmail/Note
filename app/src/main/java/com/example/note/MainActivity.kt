@@ -1,6 +1,7 @@
 package com.example.note
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -37,10 +38,14 @@ class MainActivity : AppCompatActivity() {
         saveButton.setOnClickListener {
 
             tvText.text = ""
-
             myDBManager.insertToDB(edTitle.text.toString(), edContent.text.toString())
+            Log.d("!!!", edTitle.text.toString())
+            Log.d("!!!", edContent.text.toString())
             val dataList = myDBManager.readDBData()
+            Log.d("!!!", dataList.toString())
+
             for (item in dataList) {
+//                Log.d("!!!", item)
                 tvText.append(item)
                 tvText.append("\n")
             }
