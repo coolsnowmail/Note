@@ -1,7 +1,9 @@
 package com.example.note
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -14,10 +16,11 @@ import com.example.note.db.MyDBManager
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var saveButton: Button
-    lateinit var edTitle: EditText
-    lateinit var edContent: EditText
-    lateinit var tvText: TextView
+    lateinit var fbNewButton: View
+
+    //    lateinit var edTitle: EditText
+//    lateinit var edContent: EditText
+//    lateinit var tvText: TextView
     val myDBManager = MyDBManager(this)
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -30,42 +33,25 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        saveButton = findViewById(R.id.buttonSave)
-        edTitle = findViewById(R.id.edTitle)
-        edContent = findViewById(R.id.edContent)
-        tvText = findViewById(R.id.tvText)
+        fbNewButton = findViewById(R.id.fbNewButton)
+//        edTitle = findViewById(R.id.edTitle)
+//        edContent = findViewById(R.id.edContent)
+//        tvText = findViewById(R.id.tvText)
 
-        saveButton.setOnClickListener {
-
-            tvText.text = ""
-            myDBManager.insertToDB(edTitle.text.toString(), edContent.text.toString())
-            Log.d("!!!", edTitle.text.toString())
-            Log.d("!!!", edContent.text.toString())
-            val dataList = myDBManager.readDBData()
-            Log.d("!!!", dataList.toString())
-
-            for (item in dataList) {
-//                Log.d("!!!", item)
-                tvText.append(item)
-                tvText.append("\n")
-            }
-            Toast.makeText(this, "The note is saved", Toast.LENGTH_LONG).show()
+        fbNewButton.setOnClickListener {
+            val i = Intent(this, EditActivity::class.java)
+            startActivity(i)
         }
     }
 
     override fun onResume() {
         super.onResume()
         myDBManager.openDB()
-        val dataList = myDBManager.readDBData()
-        for (item in dataList) {
-            tvText.append(item)
-            tvText.append("\n")
-        }
+
     }
 
     override fun onDestroy() {
         super.onDestroy()
         myDBManager.closeDB()
-
     }
 }
