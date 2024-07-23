@@ -104,7 +104,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:clickable="true"
-            android:foregroundTint="#852424"
             app:backgroundTint="#00BCD4"
             app:layout_constraintEnd_toEndOf="@+id/ButtonEditImg"
             app:layout_constraintStart_toStartOf="@+id/ButtonEditImg"
