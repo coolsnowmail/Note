@@ -7,6 +7,10 @@ android {
     namespace = "com.example.note"
     compileSdk = 34
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.example.note"
         minSdk = 21
